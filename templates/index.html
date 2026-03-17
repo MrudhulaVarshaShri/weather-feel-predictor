@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Feel Predictor</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 320px;
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ff7e5f;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ff6a4a;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🌤️ Weather Predictor</h2>
+
+    <form method="POST">
+        <input type="text" name="temperature" placeholder="Enter °C" required>
+        <br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            {% if result.error %}
+                <p style="color: #ffdddd;">{{ result.error }}</p>
+            {% else %}
+                <p>🌡 {{ result.input }} °C</p>
+                <p>📍 Closest: {{ result.closest }} °C</p>
+                <h3>{{ result.label }}</h3>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
