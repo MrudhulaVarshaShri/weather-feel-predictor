@@ -2,6 +2,9 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# Store last 5 temperatures
+history = []
+
 # Training data
 data = {
     0: "Freezing ❄️",
@@ -37,7 +40,7 @@ def get_advice(label):
     }
     return advice_map.get(label, "")
 
-# NEW: Icon logic (for UI)
+# Icon logic
 def get_icon(label):
     icon_map = {
         "Freezing ❄️": "❄️",
@@ -53,8 +56,10 @@ def get_icon(label):
     }
     return icon_map.get(label, "🌡️")
 
+
 @app.route("/", methods=["GET", "POST"])
 def home():
+    global history
     result = None
 
     if request.method == "POST":
@@ -64,10 +69,17 @@ def home():
             # Prediction
             closest_temp, label = predict_label(user_temp)
 
-            # Extra features
+            # Features
             advice = get_advice(label)
             icon = get_icon(label)
             explanation = f"Based on nearest temperature {closest_temp}°C, it feels {label}"
+
+            # Add to history
+            history.append(user_temp)
+
+            # Keep only last 5 values
+            if len(history) > 5:
+                history.pop(0)
 
             result = {
                 "input": user_temp,
@@ -81,7 +93,7 @@ def home():
         except ValueError:
             result = {"error": "Please enter a valid number"}
 
-    return render_template("index.html", result=result)
+    return render_template("index.html", result=result, history=history)
 
 
 if __name__ == "__main__":
