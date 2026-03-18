@@ -1,15 +1,19 @@
 # 🌤️ Weather Feel Predictor
 
-An interactive Python application that predicts how the weather feels based on temperature input using a simple distance-based model.
+An interactive web application that predicts how the weather feels based on temperature input using a simple distance-based (nearest neighbor) model.
+
+🔗 **Live App:** https://weather-feel-predictor.onrender.com
 
 ---
 
 ## 🚀 Features
 
-- Predicts weather feel (e.g., Cold, Warm, Hot)
-- Uses nearest temperature matching logic
-- Interactive command-line interface
-- Handles invalid inputs gracefully
+- 🌡️ Predicts weather feel (Cold, Pleasant, Hot, etc.)
+- 🧠 Uses nearest temperature matching logic
+- 💡 Provides smart advice based on weather conditions
+- 📊 Explains how the prediction was made
+- 🎨 Clean and responsive UI
+- 🌐 Fully deployed web application
 
 ---
 
@@ -17,17 +21,20 @@ An interactive Python application that predicts how the weather feels based on t
 
 The model uses a simple distance-based approach:
 
-1. Predefined dataset with temperature labels
-2. Calculates absolute difference between user input and dataset values
-3. Selects the closest temperature
-4. Returns corresponding weather label
+1. Uses a predefined dataset of temperatures and labels  
+2. Calculates absolute difference between input and dataset  
+3. Finds the closest matching temperature  
+4. Returns:
+   - Weather label  
+   - Explanation  
+   - Practical advice  
 
 ---
 
 ## 📊 Sample Data
 
-| Temperature (°C) | Feel        |
-|----------------|------------|
+| Temperature (°C) | Feel |
+|----------------|------|
 | 0              | Freezing ❄️ |
 | 10             | Cold 🌬️ |
 | 20             | Pleasant 😊 |
@@ -36,13 +43,26 @@ The model uses a simple distance-based approach:
 
 ---
 
-## ▶️ How to Run
+## 🖥️ Tech Stack
+
+- Python (Flask)
+- HTML & CSS
+- Gunicorn
+- Render (Deployment)
+
+---
+
+## ▶️ How to Run Locally
 
 ```bash
-python main.py
+git clone https://github.com/MrudhulaVarshaShri/weather-feel-predictor.git
+cd weather-feel-predictor
+pip install -r requirements.txt
+python app.py
 
 ---
 
 ## 👤 Author
 
-Mrudhula Varshashri A
+**Mrudhula Varshashri A**  
+Computer Science Engineer
