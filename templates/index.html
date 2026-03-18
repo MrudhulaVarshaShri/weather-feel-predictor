@@ -1,131 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Weather Feel Predictor</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            padding: 35px;
-            border-radius: 18px;
-            text-align: center;
-            width: 350px;
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        input {
-            padding: 12px;
-            width: 85%;
-            border: none;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            outline: none;
-            font-size: 14px;
-        }
-
-        button {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 10px;
-            background: #ff7e5f;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: #ff6a4a;
-            transform: scale(1.05);
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .temp {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .closest {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .label {
-            font-size: 22px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .explanation {
-            font-size: 13px;
-            opacity: 0.9;
-            margin-bottom: 8px;
-        }
-
-        .advice {
-            font-size: 14px;
-            font-weight: 500;
-            color: #ffeaa7;
-        }
-
-        .error {
-            color: #ffdddd;
-        }
-    </style>
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
 <div class="container">
-    <h2>🌤️ Weather Feel Predictor</h2>
+    <h2>Weather Feel Predictor</h2>
 
     <form method="POST">
-        <input type="text" name="temperature" placeholder="Enter temperature (°C)" required>
+        <input type="text" name="temperature" placeholder="Enter °C" required>
         <br>
         <button type="submit">Predict</button>
     </form>
 
     {% if result %}
-        <div class="result">
+        <div>
 
             {% if result.error %}
                 <p class="error">{{ result.error }}</p>
-
             {% else %}
-                <p class="temp">🌡 {{ result.input }} °C</p>
-                <p class="closest">📍 Closest match: {{ result.closest }} °C</p>
+                <div class="icon">{{ result.icon }}</div>
+
+                <p>Temperature: {{ result.input }} °C</p>
+                <p>Closest: {{ result.closest }} °C</p>
 
                 <div class="label">{{ result.label }}</div>
 
-                <!-- NEW: Explanation -->
-                <p class="explanation">{{ result.explanation }}</p>
-
-                <!-- NEW: Advice -->
-                <p class="advice">💡 {{ result.advice }}</p>
-
+                <p>{{ result.advice }}</p>
+                <p>{{ result.explanation }}</p>
             {% endif %}
 
         </div>

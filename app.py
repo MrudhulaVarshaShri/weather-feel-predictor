@@ -21,7 +21,7 @@ def predict_label(user_temp):
     closest_temp = min(data.keys(), key=lambda x: abs(x - user_temp))
     return closest_temp, data[closest_temp]
 
-# Advice logic (NEW - makes project better)
+# Advice logic
 def get_advice(label):
     advice_map = {
         "Freezing ❄️": "Wear heavy winter clothes 🧥",
@@ -37,6 +37,22 @@ def get_advice(label):
     }
     return advice_map.get(label, "")
 
+# NEW: Icon logic (for UI)
+def get_icon(label):
+    icon_map = {
+        "Freezing ❄️": "❄️",
+        "Very Cold 🧊": "🧊",
+        "Cold 🌬️": "🌬️",
+        "Cool 🌥️": "🌥️",
+        "Pleasant 😊": "🌤️",
+        "Comfortable 🙂": "🌈",
+        "Warm 🌤️": "☀️",
+        "Hot 🔥": "🔥",
+        "Very Hot 🥵": "🥵",
+        "Extreme Heat 🚨": "🚨"
+    }
+    return icon_map.get(label, "🌡️")
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     result = None
@@ -44,10 +60,13 @@ def home():
     if request.method == "POST":
         try:
             user_temp = float(request.form["temperature"])
+
+            # Prediction
             closest_temp, label = predict_label(user_temp)
 
-            # NEW additions
+            # Extra features
             advice = get_advice(label)
+            icon = get_icon(label)
             explanation = f"Based on nearest temperature {closest_temp}°C, it feels {label}"
 
             result = {
@@ -55,13 +74,15 @@ def home():
                 "closest": closest_temp,
                 "label": label,
                 "advice": advice,
-                "explanation": explanation
+                "explanation": explanation,
+                "icon": icon
             }
 
-        except:
-            result = {"error": "Invalid input"}
+        except ValueError:
+            result = {"error": "Please enter a valid number"}
 
     return render_template("index.html", result=result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
